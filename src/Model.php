@@ -102,7 +102,7 @@ abstract class Model {
         }
         return $this->objectsConstruct($registers, $this->getNameOfClass());
     }
-    
+
     public function where($condition)
     {
         $db = $this->getPDOConnection();
@@ -128,6 +128,14 @@ abstract class Model {
             return $this->objectsConstruct($registers, static::class);
         else
             return $this->createObject($registers, static::class);
+    }
+
+    public function delete($id)
+    {
+        $db = $this->getPDOConnection();
+        $sql = 'DELETE FROM '.$this->table.' WHERE id='.$id;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
     }
 
 
