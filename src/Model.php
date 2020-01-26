@@ -77,6 +77,33 @@ abstract class Model {
         $stmt->execute();
     }
 
+    public function all()
+    {
+        $sql = 'SELECT * FROM '.$this->table;
+        $db = $this->getPDOConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $registers = $stmt->fetchAll();
+        if($this->paginate)
+        {
+            $this->setPagination($registers);
+            $sql = 'SELECT * FROM '.$this->table.' LIMIT '.$this->getLimit();
+
+            if($_SESSION['PAGE'] > 1)
+            {
+                $sql = $sql.' OFFSET '.($_SESSION['PAGE'] - 1)*$this->getLimit();
+            }
+            $_SESSION['PAGINATE'] = true;
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $registers = $stmt->fetchAll(); 
+        } else {
+            $_SESSION['PAGINATE'] = false;
+        }
+        return $this->objectsConstruct($registers, $this->getNameOfClass());
+    }
+
+
     //Constructor methods
     public function createObject($register, $class_name)
     {
