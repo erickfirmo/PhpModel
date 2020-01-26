@@ -202,6 +202,16 @@ abstract class Model {
         return $this->objectsConstruct($registers, $entity->getNameOfClass());
     }
 
+    public function belongsTo($entity, $parent_id)
+    {
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT * FROM '.$entity->table.' WHERE id='.$this->$parent_id;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $registers = $stmt->fetch();
+        return $this->createObject($registers, $entity->getNameOfClass());
+    }
+
 
 }
 
