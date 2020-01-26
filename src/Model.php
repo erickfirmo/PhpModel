@@ -138,7 +138,6 @@ abstract class Model {
         $stmt->execute();
     }
 
-
     //Constructor methods
     public function createObject($register, $class_name)
     {
@@ -167,6 +166,29 @@ abstract class Model {
         }
         
         return $objects;
+    }
+
+    //Pagination methods
+    public function setPagination($registers)
+    {
+        $_SESSION['PAGES_NUMBER'] = count($registers) / $this->getLimit();
+    }
+
+    public function paginate($limit)
+    {
+        $this->paginate = true;
+        $this->limit = $limit;
+        return $this;
+    }
+     
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    public function getNameOfClass()
+    {
+        return static::class;
     }
 
 }
