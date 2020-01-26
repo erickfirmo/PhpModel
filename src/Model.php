@@ -290,8 +290,47 @@ abstract class Model {
         return $this->findPivot($pivot_entity_name, $pivot_params['table'], $pivot_params['parent_id'], $pivot_params['parent_table'], $this->id);
     }
 
+    //
+    public function writeParents($relationMethods, $attr)
+    {
+        $content = null;
+        if($this->$relationMethods() != null)
+        {
+            foreach ($this->$relationMethods() as $key => $register) {
+                if(count($this->$relationMethods()) == 1 || count($this->$relationMethods()) == $key-1)
+                    $content = $content.$register->$attr;
+                else 
+                    $content = $content.$register->$attr.', ';
+            }
+        } else {
+            return '(Nenhum)';
+        }
+        return $content;
+    }
+
+
+    public function seeInDatabase($table, $fields)
+    {
+        $conditions = '';
+        $first = false;
+        foreach ($fields as $field => $value)
+        {
+            if($first == false)
+            {
+                $first = true;
+                $conditions = $field.'="'.$value.'"';
+            } else {
+                $conditions = $conditions.' AND '.$field.'="'.$value.'"';
+
+            }
+        }
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT * FROM '.$table.' WHERE '.$conditions;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $register = $stmt->fetch();
+        return $this->createObject($register, static::class);
+    }
 
 }
-
-
 
