@@ -43,6 +43,16 @@ abstract class Model {
         $stmt->execute();
         $_SESSION['PARAMETER'] = $db->lastInsertId();
     }
+
+    public function find($id)
+    {
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT * FROM '.$this->table.' WHERE id='.$id;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $register = $stmt->fetch();
+        return $this->createObject($register, static::class);
+    }
 }
 
 
