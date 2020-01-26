@@ -1,0 +1,27 @@
+{
+    "name": "erickfirmo/phpmodel",
+    "description": "MySQL query builder class in PHP.",
+    "keywords": ["database", "pdo", "mysql", "php", "model", "oop", "sql", "php-class", "mysql-database", "php7", "db", "crud"],
+    "type": "library",
+    "authors": [
+        {
+        "name": "Érick Firmo",
+        "email": "erickluques@gmail.com"
+        }
+    ],
+    "autoload": {
+          "psr-4": {
+              "ErickFirmo\\": "src/"
+           }
+      },
+      "require": {
+        "php": ">=7",
+        "erickfirmo/dbconnection": "^1.0"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "^5.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "1.0.0"
+}
