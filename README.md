@@ -1,2 +1,2 @@
 # PhpModel
-Query Builder MySQl in PHP
+ MySQL Query Builder in PHP
