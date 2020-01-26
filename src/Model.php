@@ -2,6 +2,8 @@
 
 namespace ErickFirmo;
 
+use DBConnection;
+
 abstract class Model {
     protected $paginate = false;
     protected $limit = false;
