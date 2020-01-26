@@ -222,6 +222,31 @@ abstract class Model {
         return $this->createObject($registers, $entity->getNameOfClass());
     }
 
+    public function belongsToMany($entity, $pivot_entity, $parent_id_a, $parent_id_b)
+    {
+        $this->setPivot($pivot_entity, $parent_id_a, $this->table);
+        $fields = NULL;
+
+        foreach ($entity->fields as $key => $field)
+        {
+            if(count($entity->fields) == $key+1)
+            {
+                $fields = $fields.''.$field;
+            } else {
+                $fields = $fields.' '.$field.', ';
+            }
+        }
+
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT '.$entity->table.'.id, '.$fields.' FROM '.$entity->table.' RIGHT JOIN '.$pivot_entity->table.' AS pivot ON pivot.'.$parent_id_a.'='.$this->id.' AND pivot.'.$parent_id_b.'='.$entity->table.'.id WHERE '.$entity->table.'.id IS NOT NULL';
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $registers = $stmt->fetchAll();
+        $object = $this->objectsConstruct($registers, $entity->getNameOfClass());
+        return $object;
+    }
+
+
     //pivot
     public function setPivot($pivot_entity, $pivot_parent_id, $parent_table)
     {
