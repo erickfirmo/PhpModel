@@ -18,6 +18,7 @@ abstract class Model {
         return (new DBConnection())->getPDOConnection();
     }
 
+    //Crud methods
     public function save()
     {    
         $fields = NULL;
@@ -54,6 +55,29 @@ abstract class Model {
         return $this->createObject($register, static::class);
     }
 
+    public function update(array $updates)
+    {    
+        $fields = NULL;
+        foreach ($this->fields as $key => $field)
+        {
+            if(count($this->fields) != $key+1)
+            {
+                $fields = $fields.' '.$field.'= :'.$field.',';
+            } else {
+                $fields = $fields.' '.$field.'= :'.$field;
+            }
+        }
+        $db = $this->getPDOConnection();
+        $sql = 'UPDATE '.$this->table.' SET '.$fields.' WHERE id="'.$this->id.'"';
+        $stmt = $db->prepare($sql);
+        foreach ($updates as $key => $update)
+        {  
+            $stmt->bindValue(':'.$key, $update);
+        }
+        $stmt->execute();
+    }
+
+    //Constructor methods
     public function createObject($register, $class_name)
     {
         if(!$register)
@@ -82,7 +106,7 @@ abstract class Model {
         
         return $objects;
     }
-    
+
 }
 
 
