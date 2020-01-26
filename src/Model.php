@@ -211,7 +211,7 @@ abstract class Model {
         $registers = $stmt->fetch();
         return $this->createObject($registers, $entity->getNameOfClass());
     }
-    
+
     public function hasOne()
     {
         $db = $this->getPDOConnection();
@@ -220,6 +220,32 @@ abstract class Model {
         $stmt->execute();
         $registers = $stmt->fetch();
         return $this->createObject($registers, $entity->getNameOfClass());
+    }
+
+    //pivot
+    public function setPivot($pivot_entity, $pivot_parent_id, $parent_table)
+    {
+        $pivot_params = [];
+        $pivot_params['entity'] = $pivot_entity->getNameOfClass();
+        $pivot_params['table'] = $pivot_entity->table;
+        $pivot_params['parent_id'] = $pivot_parent_id;
+        $pivot_params['parent_table'] = $parent_table;
+        $_SESSION['PIVOT_PARAMS'] = $pivot_params;
+    }
+
+    public function findPivot($pivot_entity_name, $pivot_table, $pivot_parent_id, $parent_table, $value)
+    {
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT pivot.id FROM '.$pivot_table.' AS pivot INNER JOIN '.$parent_table.' AS parent ON pivot.'.$pivot_parent_id.'=parent.id';
+        $stmt = $db->prepare($sql);
+        
+        $stmt->execute();
+        $register = $stmt->fetch();
+        $obj = $this->createObject($register, $pivot_entity_name);
+        $obj->pivot_entity = $pivot_entity_name;
+        $obj->pivot_parent_id = $pivot_parent_id;
+        $obj->pivot_table = $pivot_table;
+        return $obj;
     }
 
 
