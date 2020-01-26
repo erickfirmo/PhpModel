@@ -12,10 +12,36 @@ abstract class Model {
     public $pivot_entity = NULL;
     public $pivot_parent_id = NULL;
     public $pivot_table = NULL;
-    
+
     public function getPDOConnection()
     {
         return (new DBConnection())->getPDOConnection();
+    }
+
+    public function save()
+    {    
+        $fields = NULL;
+        $values = NULL;
+        foreach ($this->fields as $key => $field)
+        {
+            if(count($this->fields) != $key+1)
+            {
+                $fields = $fields.$field.',';
+                $values = $values.'?,';
+            } else {
+                $fields = $fields.$field;
+                $values = $values.'?';
+            }
+        }
+        $db = $this->getPDOConnection();
+        $sql = 'INSERT INTO '.$this->table.' ('.$fields.') VALUES ('.$values.')';
+        $stmt = $db->prepare($sql);
+        foreach ($this->fields as $key => $field)
+        {  
+            $stmt->bindValue($key+1, $this->$field);
+        }
+        $stmt->execute();
+        $_SESSION['PARAMETER'] = $db->lastInsertId();
     }
 }
 
