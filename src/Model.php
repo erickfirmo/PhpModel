@@ -102,6 +102,33 @@ abstract class Model {
         }
         return $this->objectsConstruct($registers, $this->getNameOfClass());
     }
+    
+    public function where($condition)
+    {
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT * FROM '.$this->table.' WHERE '.$condition;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $registers = $stmt->fetchAll();
+        if($this->paginate)
+        {
+            $this->setPagination($registers);
+            if($_SESSION['PAGE'] > 1)
+            {
+                $sql = $sql.' OFFSET '.($_SESSION['PAGE'] - 1)*$this->getLimit();
+            }
+            $_SESSION['PAGINATE'] = true;
+            $stmt = $this->getStmt($sql);
+            $stmt->execute();
+            $registers = $stmt->fetchAll(); 
+        } else {
+            $_SESSION['PAGINATE'] = false;
+        }
+        if(count($registers) > 1)
+            return $this->objectsConstruct($registers, static::class);
+        else
+            return $this->createObject($registers, static::class);
+    }
 
 
     //Constructor methods
