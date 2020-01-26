@@ -248,6 +248,23 @@ abstract class Model {
         return $obj;
     }
 
+    public function findBy($conditions)
+    {
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT * FROM '.$this->table.' WHERE '.$conditions;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $register = $stmt->fetch();
+        return $this->createObject($register, static::class);
+    }
+
+    public function pivot()
+    {
+        $pivot_params = $_SESSION['PIVOT_PARAMS'];
+        $pivot_entity_name = $pivot_params['entity'];
+        return $this->findPivot($pivot_entity_name, $pivot_params['table'], $pivot_params['parent_id'], $pivot_params['parent_table'], $this->id);
+    }
+
 
 }
 
