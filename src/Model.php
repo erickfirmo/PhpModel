@@ -53,6 +53,36 @@ abstract class Model {
         $register = $stmt->fetch();
         return $this->createObject($register, static::class);
     }
+
+    public function createObject($register, $class_name)
+    {
+        if(!$register)
+        {
+            return NULL;
+        } else {
+            $obj = new $class_name;
+            foreach ($register as $key => $value)
+            {
+                $obj->$key = $value;
+            }
+            return $obj;
+        }
+    }
+    
+    public function objectsConstruct($registers, $class_name)
+    {
+        $objects = [];
+        if(!empty($registers))
+        {
+            foreach ($registers as $register)
+            {
+                array_push($objects, $this->createObject($register, $class_name));
+            }
+        }
+        
+        return $objects;
+    }
+    
 }
 
 
