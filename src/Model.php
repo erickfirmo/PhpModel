@@ -191,6 +191,18 @@ abstract class Model {
         return static::class;
     }
 
+    //Relationship methods
+    public function hasMany($entity, $parent_id)
+    {
+        $db = $this->getPDOConnection();
+        $sql = 'SELECT * FROM '.$entity->table.' WHERE '.$parent_id.'='.$this->id;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $registers = $stmt->fetchAll();
+        return $this->objectsConstruct($registers, $entity->getNameOfClass());
+    }
+
+
 }
 
 
