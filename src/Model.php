@@ -94,7 +94,7 @@ abstract class Model {
             $_SESSION['PAGINATE'] = true;
             $stmt = $db->prepare($sql);
             $stmt->execute();
-            $registers = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC); 
         } else {
             $_SESSION['PAGINATE'] = false;
         }
@@ -107,7 +107,7 @@ abstract class Model {
         $sql = 'SELECT * FROM '.static::$table.' WHERE '.$condition;
         $stmt = $db->prepare($sql);
         $stmt->execute();
-        $registers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         if(self::$paginate)
         {
             self::setPagination($registers);
@@ -118,7 +118,39 @@ abstract class Model {
             $_SESSION['PAGINATE'] = true;
             $stmt = self::getStmt($sql);
             $stmt->execute();
-            $registers = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC); 
+        } else {
+            $_SESSION['PAGINATE'] = false;
+        }
+        if(count($registers) > 1)
+            return self::objectsConstruct($registers, static::class);
+        else
+            return self::createObject($registers, static::class);
+    }
+
+    public static function like($operator, $values)
+    {
+        $db = self::getPDOConnection();
+        $sql = 'SELECT * FROM '.static::$table;
+        $filter = '';
+        foreach ($values as $value => $fieldName) {
+            $filter .= $filter == '' ? " WHERE $fieldName LIKE "."'"."%".$value."%"."'" : " $operator $fieldName LIKE "."'"."%".$value."%"."'";
+        }
+        $sql .= $filter;
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        if(self::$paginate)
+        {
+            self::setPagination($registers);
+            if($_SESSION['PAGE'] > 1)
+            {
+                $sql = $sql.' OFFSET '.($_SESSION['PAGE'] - 1)*self::getLimit();
+            }
+            $_SESSION['PAGINATE'] = true;
+            $stmt = self::getStmt($sql);
+            $stmt->execute();
+            $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC); 
         } else {
             $_SESSION['PAGINATE'] = false;
         }
@@ -196,7 +228,7 @@ abstract class Model {
         $sql = 'SELECT * FROM '.$entity->table.' WHERE '.$parent_id.'='.self::$id;
         $stmt = $db->prepare($sql);
         $stmt->execute();
-        $registers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return self::objectsConstruct($registers, $entity->getNameOfClass());
     }
 
@@ -239,7 +271,7 @@ abstract class Model {
         $sql = 'SELECT '.$entity->table.'.id, '.$fields.' FROM '.$entity->table.' RIGHT JOIN '.$pivot_entity->table.' AS pivot ON pivot.'.$parent_id_a.'='.self::$id.' AND pivot.'.$parent_id_b.'='.$entity->table.'.id WHERE '.$entity->table.'.id IS NOT NULL';
         $stmt = $db->prepare($sql);
         $stmt->execute();
-        $registers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         $object = self::objectsConstruct($registers, $entity->getNameOfClass());
         return $object;
     }
