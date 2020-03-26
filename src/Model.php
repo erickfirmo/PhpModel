@@ -81,7 +81,7 @@ abstract class Model {
         $db = self::getPDOConnection();
         $stmt = $db->prepare($sql);
         $stmt->execute();
-        $registers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $registers = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         if(self::$paginate)
         {
             self::setPagination($registers);
