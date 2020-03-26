@@ -3,27 +3,27 @@
 namespace ErickFirmo;
 
 abstract class Model {
-    protected $paginate = false;
-    protected $limit = false;
-    protected $cascade = false;
-    protected $action = NULL;
-    public $pivot_entity = NULL;
-    public $pivot_parent_id = NULL;
-    public $pivot_table = NULL;
+    protected static $paginate = false;
+    protected static $limit = false;
+    protected static $cascade = false;
+    protected static $action = NULL;
+    public static $pivot_entity = NULL;
+    public static $pivot_parent_id = NULL;
+    public static $pivot_table = NULL;
 
-    public function getPDOConnection()
+    public static function getPDOConnection()
     {
         return (new DBConnection())->getPDOConnection();
     }
 
     //Crud methods
-    public function save()
+    public static function save()
     {    
         $fields = NULL;
         $values = NULL;
-        foreach ($this->fields as $key => $field)
+        foreach (self::$fields as $key => $field)
         {
-            if(count($this->fields) != $key+1)
+            if(count(self::$fields) != $key+1)
             {
                 $fields = $fields.$field.',';
                 $values = $values.'?,';
@@ -32,41 +32,41 @@ abstract class Model {
                 $values = $values.'?';
             }
         }
-        $db = $this->getPDOConnection();
-        $sql = 'INSERT INTO '.$this->table.' ('.$fields.') VALUES ('.$values.')';
+        $db = self::getPDOConnection();
+        $sql = 'INSERT INTO '.static::$table.' ('.$fields.') VALUES ('.$values.')';
         $stmt = $db->prepare($sql);
-        foreach ($this->fields as $key => $field)
+        foreach (self::$fields as $key => $field)
         {  
-            $stmt->bindValue($key+1, $this->$field);
+            $stmt->bindValue($key+1, self::$field);
         }
         $stmt->execute();
         $_SESSION['PARAMETER'] = $db->lastInsertId();
     }
 
-    public function find($id)
+    public static function find($id)
     {
-        $db = $this->getPDOConnection();
-        $sql = 'SELECT * FROM '.$this->table.' WHERE id='.$id;
+        $db = self::getPDOConnection();
+        $sql = 'SELECT * FROM '.static::$table.' WHERE id='.$id;
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $register = $stmt->fetch();
-        return $this->createObject($register, static::class);
+        return self::createObject($register, static::class);
     }
 
-    public function update(array $updates)
+    public static function update(array $updates)
     {    
         $fields = NULL;
-        foreach ($this->fields as $key => $field)
+        foreach (self::$fields as $key => $field)
         {
-            if(count($this->fields) != $key+1)
+            if(count(self::$fields) != $key+1)
             {
                 $fields = $fields.' '.$field.'= :'.$field.',';
             } else {
                 $fields = $fields.' '.$field.'= :'.$field;
             }
         }
-        $db = $this->getPDOConnection();
-        $sql = 'UPDATE '.$this->table.' SET '.$fields.' WHERE id="'.$this->id.'"';
+        $db = self::getPDOConnection();
+        $sql = 'UPDATE '.static::$table.' SET '.$fields.' WHERE id="'.self::$id.'"';
         $stmt = $db->prepare($sql);
         foreach ($updates as $key => $update)
         {  
@@ -75,21 +75,21 @@ abstract class Model {
         $stmt->execute();
     }
 
-    public function all()
+    public static function all()
     {
-        $sql = 'SELECT * FROM '.$this->table;
-        $db = $this->getPDOConnection();
+        $sql = 'SELECT * FROM '.static::$table;
+        $db = self::getPDOConnection();
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $registers = $stmt->fetchAll();
-        if($this->paginate)
+        if(self::$paginate)
         {
-            $this->setPagination($registers);
-            $sql = 'SELECT * FROM '.$this->table.' LIMIT '.$this->getLimit();
+            self::setPagination($registers);
+            $sql = 'SELECT * FROM '.static::$table.' LIMIT '.self::getLimit();
 
             if($_SESSION['PAGE'] > 1)
             {
-                $sql = $sql.' OFFSET '.($_SESSION['PAGE'] - 1)*$this->getLimit();
+                $sql = $sql.' OFFSET '.($_SESSION['PAGE'] - 1)*self::getLimit();
             }
             $_SESSION['PAGINATE'] = true;
             $stmt = $db->prepare($sql);
@@ -98,46 +98,46 @@ abstract class Model {
         } else {
             $_SESSION['PAGINATE'] = false;
         }
-        return $this->objectsConstruct($registers, $this->getNameOfClass());
+        return self::objectsConstruct($registers, self::getNameOfClass());
     }
 
-    public function where($condition)
+    public static function where($condition)
     {
-        $db = $this->getPDOConnection();
-        $sql = 'SELECT * FROM '.$this->table.' WHERE '.$condition;
+        $db = self::getPDOConnection();
+        $sql = 'SELECT * FROM '.static::$table.' WHERE '.$condition;
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $registers = $stmt->fetchAll();
-        if($this->paginate)
+        if(self::$paginate)
         {
-            $this->setPagination($registers);
+            self::setPagination($registers);
             if($_SESSION['PAGE'] > 1)
             {
-                $sql = $sql.' OFFSET '.($_SESSION['PAGE'] - 1)*$this->getLimit();
+                $sql = $sql.' OFFSET '.($_SESSION['PAGE'] - 1)*self::getLimit();
             }
             $_SESSION['PAGINATE'] = true;
-            $stmt = $this->getStmt($sql);
+            $stmt = self::getStmt($sql);
             $stmt->execute();
             $registers = $stmt->fetchAll(); 
         } else {
             $_SESSION['PAGINATE'] = false;
         }
         if(count($registers) > 1)
-            return $this->objectsConstruct($registers, static::class);
+            return self::objectsConstruct($registers, static::class);
         else
-            return $this->createObject($registers, static::class);
+            return self::createObject($registers, static::class);
     }
 
-    public function delete($id)
+    public static function delete($id)
     {
-        $db = $this->getPDOConnection();
-        $sql = 'DELETE FROM '.$this->table.' WHERE id='.$id;
+        $db = self::getPDOConnection();
+        $sql = 'DELETE FROM '.static::$table.' WHERE id='.$id;
         $stmt = $db->prepare($sql);
         $stmt->execute();
     }
 
     //Constructor methods
-    public function createObject($register, $class_name)
+    public static function createObject($register, $class_name)
     {
         if(!$register)
         {
@@ -152,14 +152,14 @@ abstract class Model {
         }
     }
     
-    public function objectsConstruct($registers, $class_name)
+    public static function objectsConstruct($registers, $class_name)
     {
         $objects = [];
         if(!empty($registers))
         {
             foreach ($registers as $register)
             {
-                array_push($objects, $this->createObject($register, $class_name));
+                array_push($objects, self::createObject($register, $class_name));
             }
         }
         
@@ -167,62 +167,62 @@ abstract class Model {
     }
 
     //Pagination methods
-    public function setPagination($registers)
+    public static function setPagination($registers)
     {
-        $_SESSION['PAGES_NUMBER'] = count($registers) / $this->getLimit();
+        $_SESSION['PAGES_NUMBER'] = count($registers) / self::getLimit();
     }
 
-    public function paginate($limit)
+    public static function paginate($limit)
     {
-        $this->paginate = true;
-        $this->limit = $limit;
+        self::$paginate = true;
+        self::$limit = $limit;
         return $this;
     }
      
-    public function getLimit()
+    public static function getLimit()
     {
-        return $this->limit;
+        return self::$limit;
     }
 
-    public function getNameOfClass()
+    public static function getNameOfClass()
     {
         return static::class;
     }
 
     //Relationship methods
-    public function hasMany($entity, $parent_id)
+    public static function hasMany($entity, $parent_id)
     {
-        $db = $this->getPDOConnection();
-        $sql = 'SELECT * FROM '.$entity->table.' WHERE '.$parent_id.'='.$this->id;
+        $db = self::getPDOConnection();
+        $sql = 'SELECT * FROM '.$entity->table.' WHERE '.$parent_id.'='.self::$id;
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $registers = $stmt->fetchAll();
-        return $this->objectsConstruct($registers, $entity->getNameOfClass());
+        return self::objectsConstruct($registers, $entity->getNameOfClass());
     }
 
-    public function belongsTo($entity, $parent_id)
+    public static function belongsTo($entity, $parent_id)
     {
-        $db = $this->getPDOConnection();
-        $sql = 'SELECT * FROM '.$entity->table.' WHERE id='.$this->$parent_id;
+        $db = self::getPDOConnection();
+        $sql = 'SELECT * FROM '.$entity->table.' WHERE id='.self::$$parent_id;
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $registers = $stmt->fetch();
-        return $this->createObject($registers, $entity->getNameOfClass());
+        return self::createObject($registers, $entity->getNameOfClass());
     }
 
-    public function hasOne()
+    public static function hasOne()
     {
-        $db = $this->getPDOConnection();
-        $sql = 'SELECT * FROM '.$entity->table.' WHERE id='.$this->$parent_id;
+        $db = self::getPDOConnection();
+        $sql = 'SELECT * FROM '.$entity->table.' WHERE id='.self::$$parent_id;
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $registers = $stmt->fetch();
-        return $this->createObject($registers, $entity->getNameOfClass());
+        return self::createObject($registers, $entity->getNameOfClass());
     }
 
-    public function belongsToMany($entity, $pivot_entity, $parent_id_a, $parent_id_b)
+    public static function belongsToMany($entity, $pivot_entity, $parent_id_a, $parent_id_b)
     {
-        $this->setPivot($pivot_entity, $parent_id_a, $this->table);
+        self::setPivot($pivot_entity, $parent_id_a, static::$table);
         $fields = NULL;
 
         foreach ($entity->fields as $key => $field)
@@ -235,18 +235,18 @@ abstract class Model {
             }
         }
 
-        $db = $this->getPDOConnection();
-        $sql = 'SELECT '.$entity->table.'.id, '.$fields.' FROM '.$entity->table.' RIGHT JOIN '.$pivot_entity->table.' AS pivot ON pivot.'.$parent_id_a.'='.$this->id.' AND pivot.'.$parent_id_b.'='.$entity->table.'.id WHERE '.$entity->table.'.id IS NOT NULL';
+        $db = self::getPDOConnection();
+        $sql = 'SELECT '.$entity->table.'.id, '.$fields.' FROM '.$entity->table.' RIGHT JOIN '.$pivot_entity->table.' AS pivot ON pivot.'.$parent_id_a.'='.self::$id.' AND pivot.'.$parent_id_b.'='.$entity->table.'.id WHERE '.$entity->table.'.id IS NOT NULL';
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $registers = $stmt->fetchAll();
-        $object = $this->objectsConstruct($registers, $entity->getNameOfClass());
+        $object = self::objectsConstruct($registers, $entity->getNameOfClass());
         return $object;
     }
 
 
     //pivot
-    public function setPivot($pivot_entity, $pivot_parent_id, $parent_table)
+    public static function setPivot($pivot_entity, $pivot_parent_id, $parent_table)
     {
         $pivot_params = [];
         $pivot_params['entity'] = $pivot_entity->getNameOfClass();
@@ -256,58 +256,58 @@ abstract class Model {
         $_SESSION['PIVOT_PARAMS'] = $pivot_params;
     }
 
-    public function findPivot($pivot_entity_name, $pivot_table, $pivot_parent_id, $parent_table, $value)
+    public static function findPivot($pivot_entity_name, $pivot_table, $pivot_parent_id, $parent_table, $value)
     {
-        $db = $this->getPDOConnection();
+        $db = self::getPDOConnection();
         $sql = 'SELECT pivot.id FROM '.$pivot_table.' AS pivot INNER JOIN '.$parent_table.' AS parent ON pivot.'.$pivot_parent_id.'=parent.id';
         $stmt = $db->prepare($sql);
         
         $stmt->execute();
         $register = $stmt->fetch();
-        $obj = $this->createObject($register, $pivot_entity_name);
+        $obj = self::createObject($register, $pivot_entity_name);
         $obj->pivot_entity = $pivot_entity_name;
         $obj->pivot_parent_id = $pivot_parent_id;
         $obj->pivot_table = $pivot_table;
         return $obj;
     }
 
-    public function findBy($conditions)
+    public static function findBy($conditions)
     {
-        $db = $this->getPDOConnection();
-        $sql = 'SELECT * FROM '.$this->table.' WHERE '.$conditions;
+        $db = self::getPDOConnection();
+        $sql = 'SELECT * FROM '.static::$table.' WHERE '.$conditions;
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $register = $stmt->fetch();
-        return $this->createObject($register, static::class);
+        return self::createObject($register, static::class);
     }
 
-    public function pivot()
+    public static function pivot()
     {
         $pivot_params = $_SESSION['PIVOT_PARAMS'];
         $pivot_entity_name = $pivot_params['entity'];
-        return $this->findPivot($pivot_entity_name, $pivot_params['table'], $pivot_params['parent_id'], $pivot_params['parent_table'], $this->id);
+        return self::findPivot($pivot_entity_name, $pivot_params['table'], $pivot_params['parent_id'], $pivot_params['parent_table'], self::$id);
     }
 
     //
-    public function writeParents($relationMethods, $attr)
+    public static function writeParents($relationMethods, $attr)
     {
         $content = null;
-        if($this->$relationMethods() != null)
+        if(self::$relationMethods() != null)
         {
-            foreach ($this->$relationMethods() as $key => $register) {
-                if(count($this->$relationMethods()) == 1 || count($this->$relationMethods()) == $key-1)
+            foreach (self::$relationMethods() as $key => $register) {
+                if(count(self::$relationMethods()) == 1 || count(self::$relationMethods()) == $key-1)
                     $content = $content.$register->$attr;
                 else 
                     $content = $content.$register->$attr.', ';
             }
         } else {
-            return '(Nenhum)';
+            return NULL;
         }
         return $content;
     }
 
 
-    public function seeInDatabase($table, $fields)
+    public static function seeInDatabase($table, $fields)
     {
         $conditions = '';
         $first = false;
@@ -322,12 +322,12 @@ abstract class Model {
 
             }
         }
-        $db = $this->getPDOConnection();
+        $db = self::getPDOConnection();
         $sql = 'SELECT * FROM '.$table.' WHERE '.$conditions;
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $register = $stmt->fetch();
-        return $this->createObject($register, static::class);
+        return self::createObject($register, static::class);
     }
 
 }
