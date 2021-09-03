@@ -221,6 +221,18 @@ abstract class Model {
         return $this->statement->execute();
     }
 
+    // deleta registro
+    public function delete(int $id)
+    {
+        $this->clearQuery();
+
+        $sql = 'DELETE FROM '.$this->table.' WHERE id='.$id;
+        $this->addQuery($sql);
+        $this->setStatement();
+
+        return $this->statement->execute();
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
