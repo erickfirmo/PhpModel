@@ -26,9 +26,10 @@ abstract class Model {
     public static $pivot_parent_id = NULL;
     public static $pivot_table = NULL;
 
-    public static function getPDOConnection()
+    // realiza conexão com o banco de dados
+    public function connect() : Object
     {
-        return (new DBConnection())->getPDOConnection();
+        return $this->db = (new \Connection())->getPDOConnection();
     }
 
     //Crud methods
