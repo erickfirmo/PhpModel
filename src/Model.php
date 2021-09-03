@@ -168,7 +168,7 @@ abstract class Model {
     {
         return $this->sql;
     }
-    
+
     // busca registros
     public function select() : Object
     {
@@ -178,6 +178,29 @@ abstract class Model {
         $this->setStatement();
 
         return $this;
+    }
+
+    // salva registro
+    public function insert(array $values)
+    {
+        $this->clearQuery();
+
+        $columns = array_keys($values);
+        $values = array_values($values);
+        $columns = implode(", ", $columns);
+
+        $values = implode(', ', array_map(
+            function ($v) { return sprintf("'%s'", addslashes($v)); },
+            $values
+        ));
+
+        $sql = "INSERT INTO ".$this->table." (".$columns.") VALUES (".$values.")";
+        $this->addQuery($sql);
+        $this->setStatement();
+
+        $this->statement->execute();
+
+        return $this->findById($this->db->lastInsertId());
     }
 
     /*
