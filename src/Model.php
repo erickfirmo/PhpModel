@@ -203,6 +203,24 @@ abstract class Model {
         return $this->findById($this->db->lastInsertId());
     }
 
+    // atualiza registro
+    public function update(int $id, array $values)
+    { 
+        $this->clearQuery();
+
+        $columns = implode(', ', array_map(
+            function ($v, $k) { return sprintf("%s='%s'", $k, addslashes($v)); },
+            $values,
+            array_keys($values)
+        ));
+
+        $sql = 'UPDATE '.$this->table.' SET '.$columns.' WHERE id='.$id;
+        $this->addQuery($sql);
+        $this->setStatement();
+
+        return $this->statement->execute();
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
