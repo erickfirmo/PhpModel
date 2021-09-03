@@ -48,6 +48,12 @@ abstract class Model {
         $this->links = array_keys(array_fill(1, $pages, null));
     }
 
+    // limpa query do objeto
+    public function clearQuery() : void
+    {
+        $this->sql = null;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
