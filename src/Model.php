@@ -39,6 +39,15 @@ abstract class Model {
         $this->statement = $this->connect()->prepare($this->getSql());
     }
 
+    // seta array de links da paginação
+    public function setLink(int $count) : void
+    {
+        $rest = $count % $this->perPage;
+        $pages = $count / $this->perPage;
+        $pages = $rest > 0 ? ($pages + 1) : $pages;
+        $this->links = array_keys(array_fill(1, $pages, null));
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
