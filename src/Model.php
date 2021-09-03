@@ -88,6 +88,18 @@ abstract class Model {
         $this->collection = $collection;
     }
 
+    // retorna objeto com os registros buscados
+    public function get() : Object
+    {
+        $this->statement->execute();
+
+        $registers = $this->statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        $this->setCollection($registers);
+
+        return $this->collection;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
