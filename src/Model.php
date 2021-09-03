@@ -32,29 +32,6 @@ abstract class Model {
         return $this->db = (new \Connection())->getPDOConnection();
     }
 
-    //Pagination methods
-    public static function setPagination($registers)
-    {
-        $_SESSION['PAGES_NUMBER'] = count($registers) / self::getLimit();
-    }
-
-    public static function paginate($limit)
-    {
-        self::$paginate = true;
-        self::$limit = $limit;
-        return $this;
-    }
-     
-    public static function getLimit()
-    {
-        return self::$limit;
-    }
-
-    public static function getNameOfClass()
-    {
-        return static::class;
-    }
-
     //Relationship methods
     public static function hasMany($entity, $parent_id)
     {
