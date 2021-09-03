@@ -100,6 +100,15 @@ abstract class Model {
         return $this->collection;
     }
 
+    // seta limite de dados da consulta
+    public function limit(int $limit) : Object
+    {
+        $this->addQuery(' LIMIT '.$limit);
+        $this->setStatement();
+
+        return $this;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
