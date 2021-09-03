@@ -32,6 +32,7 @@ abstract class Model {
         return $this->db = (new \Connection())->getPDOConnection();
     }
 
+    /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
     {
@@ -114,63 +115,11 @@ abstract class Model {
         return $obj;
     }
 
-    public static function findBy($conditions)
-    {
-        $db = self::getPDOConnection();
-        $sql = 'SELECT * FROM '.static::$table.' WHERE '.$conditions;
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $register = $stmt->fetch();
-        return self::createObject($register, static::class);
-    }
-
     public static function pivot()
     {
         $pivot_params = $_SESSION['PIVOT_PARAMS'];
         $pivot_entity_name = $pivot_params['entity'];
         return self::findPivot($pivot_entity_name, $pivot_params['table'], $pivot_params['parent_id'], $pivot_params['parent_table'], self::$id);
     }
-
-    //
-    public static function writeParents($relationMethods, $attr)
-    {
-        $content = null;
-        if(self::$relationMethods() != null)
-        {
-            foreach (self::$relationMethods() as $key => $register) {
-                if(count(self::$relationMethods()) == 1 || count(self::$relationMethods()) == $key-1)
-                    $content = $content.$register->$attr;
-                else 
-                    $content = $content.$register->$attr.', ';
-            }
-        } else {
-            return NULL;
-        }
-        return $content;
-    }
-
-
-    public static function seeInDatabase($table, $fields)
-    {
-        $conditions = '';
-        $first = false;
-        foreach ($fields as $field => $value)
-        {
-            if($first == false)
-            {
-                $first = true;
-                $conditions = $field.'="'.$value.'"';
-            } else {
-                $conditions = $conditions.' AND '.$field.'="'.$value.'"';
-
-            }
-        }
-        $db = self::getPDOConnection();
-        $sql = 'SELECT * FROM '.$table.' WHERE '.$conditions;
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $register = $stmt->fetch();
-        return self::createObject($register, static::class);
-    }
-
+    */
 }
