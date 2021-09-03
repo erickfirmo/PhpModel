@@ -124,8 +124,21 @@ Lorem ipsum
                                ->get();
 
 ```
+### Pagination
+```php
+<?php
 
 
+
+```
+
+### Collection
+```php
+<?php
+
+
+
+```
 
 ### Namespace
 
@@ -134,9 +147,10 @@ Lorem ipsum
 
 ```
 
+<!-- Relationships -->
 
-## Error page
-Lorem ipsum `test()` dolor sit amet.
+<!-- Exceptions -->
+
 
 <!--## License -->
 
