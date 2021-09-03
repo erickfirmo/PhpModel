@@ -145,6 +145,15 @@ abstract class Model {
         return $this->collection;
     }
 
+    // ordena regitros em ordem crescente
+    public function orderByAsc() : Object
+    {
+        $this->addQuery(' ORDER BY id ASC');
+        $this->setStatement();
+
+        return $this;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
