@@ -3,10 +3,25 @@
 namespace ErickFirmo;
 
 abstract class Model {
-    protected static $paginate = false;
-    protected static $limit = false;
-    protected static $cascade = false;
-    protected static $action = NULL;
+
+    protected $sql;
+
+    protected $collection = [];
+
+    protected $statement;
+
+    protected $db;
+
+    protected $perPage;
+
+    public $links;
+
+    public $hasWhere;
+
+    #protected static $paginate = false;
+    #protected static $limit = false;
+    #protected static $cascade = false;
+    #protected static $action = NULL;
     public static $pivot_entity = NULL;
     public static $pivot_parent_id = NULL;
     public static $pivot_table = NULL;
