@@ -233,6 +233,24 @@ abstract class Model {
         return $this->statement->execute();
     }
 
+    // busca registro pelo id
+    public function findById(int $id)
+    {
+        $this->clearQuery();
+
+        $sql = 'SELECT * FROM '.$this->table.' WHERE id='.$id;
+        $this->addQuery($sql);
+        $this->setStatement();
+
+        $this->statement->execute();
+
+        $registers = $this->statement->fetch();
+
+        $this->setCollection($registers, true);
+
+        return $this->collection->items;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
