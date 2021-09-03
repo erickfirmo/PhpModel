@@ -62,6 +62,32 @@ abstract class Model {
         return $this;
     }
 
+    // seta objeto com os registros da consulta
+    public function setCollection(array $registers, $singleRegister=false, array $items = [], $item = null) : void
+    {
+        $modelName = get_called_class();
+
+        if($singleRegister) {
+            $items = (object) $registers;
+        } else {
+            foreach($registers as $register) {
+                $item = new $modelName;
+                // cria objeto model baseado no fillable
+                foreach ($this->fillable as $f) {
+                    $item->$f = $register[$f];
+                }
+
+                array_push($items, $item);
+            }
+        }
+
+        $collection = new \stdClass;
+        $collection->items = $items;
+        $collection->links = $this->links;
+        
+        $this->collection = $collection;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
