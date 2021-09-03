@@ -54,6 +54,14 @@ abstract class Model {
         $this->sql = null;
     }
 
+    // acrescenta query a query já existente
+    public function addQuery(string $sql) : Object
+    {
+        $this->sql = $this->sql . $sql;
+
+        return $this;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
