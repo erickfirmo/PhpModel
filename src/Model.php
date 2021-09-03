@@ -169,6 +169,17 @@ abstract class Model {
         return $this->sql;
     }
     
+    // busca registros
+    public function select() : Object
+    {
+        $this->clearQuery();
+        $sql = "SELECT * FROM ".$this->table;
+        $this->addQuery($sql);
+        $this->setStatement();
+
+        return $this;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
