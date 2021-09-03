@@ -251,6 +251,19 @@ abstract class Model {
         return $this->collection->items;
     }
 
+    // adiciona where a query
+    public function where($column, $condition, $value)
+    {
+        $sql = !$this->hasWhere ?  ' WHERE ' : ' AND ';
+        $sql = $sql . $column . $condition . "'$value'";
+        $this->addQuery($sql);
+        $this->setStatement();
+
+        $this->hasWhere = true;
+
+        return $this;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
