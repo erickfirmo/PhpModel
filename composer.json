@@ -16,7 +16,7 @@
       },
       "require": {
         "php": ">=7",
-        "erickfirmo/dbconnection": "^1.0.3"
+        "erickfirmo/dbconnection": "1.1.2"
     },
     "require-dev": {
       "phpunit/phpunit": "^5.0"
