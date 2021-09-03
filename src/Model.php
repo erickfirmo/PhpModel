@@ -162,7 +162,13 @@ abstract class Model {
 
         return $this;
     }
-
+    
+    // retorna query
+    public function getSql()
+    {
+        return $this->sql;
+    }
+    
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
