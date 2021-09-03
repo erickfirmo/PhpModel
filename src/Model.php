@@ -22,9 +22,10 @@ abstract class Model {
     #protected static $limit = false;
     #protected static $cascade = false;
     #protected static $action = NULL;
-    public static $pivot_entity = NULL;
-    public static $pivot_parent_id = NULL;
-    public static $pivot_table = NULL;
+
+    #public static $pivot_entity = NULL;
+    #public static $pivot_parent_id = NULL;
+    #public static $pivot_table = NULL;
 
     // realiza conexão com o banco de dados
     public function connect() : Object
