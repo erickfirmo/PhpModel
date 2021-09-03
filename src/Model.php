@@ -33,6 +33,12 @@ abstract class Model {
         return $this->db = (new \Connection())->getPDOConnection();
     }
 
+    // seta statement
+    public function setStatement() : void
+    {
+        $this->statement = $this->connect()->prepare($this->getSql());
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
