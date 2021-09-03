@@ -109,6 +109,42 @@ abstract class Model {
         return $this;
     }
 
+    // retorna registros com paginação
+    public function paginate(int $perPage=10, $page=1)
+    {  
+        $page = isset($_GET['page']) ? $_GET['page'] : $page;
+
+        // verifica se valor da paginação não é numerico
+        if(!is_numeric($page) || $page == null || $page == 0) {
+            $page = 1;
+        }
+        
+        /* busca uma determinada quantidade de itens */
+        $start = ($page * $perPage) - $perPage;
+        $this->addQuery(' LIMIT '.$start.', '.$perPage);
+        $this->setStatement();
+        $this->statement->execute();
+        $registers = $this->statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        /* define quantidade de itens por página */
+        $this->perPage = $perPage;
+
+        /* limpa query */
+        $this->clearQuery();
+
+        /* define links */
+        $this->addQuery('SELECT COUNT(*) FROM '.$this->table);
+        $this->setStatement();
+        $this->statement->execute();
+        $count = $this->statement->fetchColumn();
+        $this->setLink($count);
+
+        /* define collection */
+        $this->setCollection($registers);
+
+        return $this->collection;
+    }
+
     /*
     //Relationship methods
     public static function hasMany($entity, $parent_id)
