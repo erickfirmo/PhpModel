@@ -32,36 +32,6 @@ abstract class Model {
         return $this->db = (new \Connection())->getPDOConnection();
     }
 
-    //Constructor methods
-    public static function createObject($register, $class_name)
-    {
-        if(!$register)
-        {
-            return NULL;
-        } else {
-            $obj = new $class_name;
-            foreach ($register as $key => $value)
-            {
-                $obj->$key = $value;
-            }
-            return $obj;
-        }
-    }
-    
-    public static function objectsConstruct($registers, $class_name)
-    {
-        $objects = [];
-        if(!empty($registers))
-        {
-            foreach ($registers as $register)
-            {
-                array_push($objects, self::createObject($register, $class_name));
-            }
-        }
-        
-        return $objects;
-    }
-
     //Pagination methods
     public static function setPagination($registers)
     {
