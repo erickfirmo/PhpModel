@@ -41,7 +41,7 @@ Select all columns from the table using the `select` method. Use o método `get`
 ```php
 <?php
 
-  // Returns all collumns from `cars` table
+  // Returns all columns from `cars` table
   $car = (new Car())->select()
                     ->get();
   
@@ -51,7 +51,7 @@ Select specific columns from the table passing an array as parameter in `select`
 ```php
 <?php
 
-  // Returns all collumns from model table
+  // Returns all columns from model table
   $cars = (new Car())->select(['name', 'company', 'year', 'plate'])
                      ->get();
 
