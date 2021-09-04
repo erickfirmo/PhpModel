@@ -52,7 +52,7 @@ Select specific columns from the table passing an array as parameter in `select`
 <?php
 
   // Returns all collumns from model table
-  $cars = (new Car())->select(['name, 'company', 'year', 'plate'])
+  $cars = (new Car())->select(['name', 'company', 'year', 'plate'])
                      ->get();
 
 
