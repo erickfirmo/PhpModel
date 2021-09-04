@@ -11,23 +11,21 @@ To install with composer:
 composer require erickfirmo/phpmodel
 ```
 
-## Connection
-
-## Usage
+## Usage example
 ```php
 <?php
 
   // Requires composer autoloader
   require __DIR__ . '/vendor/autoload.php';
 
-  // Insert register example
+  // Insert register example, returns boolean
   $saved = (new Customer())->insert([
       'name' => $name,
       'email' => $email,
       'phone' => $phone,
   ]);
   
-  // Select register example
+  // Select register example, returns colletion
   $customers = (new Customer())->select()
                                ->where('email', '=', $email)
                                ->get();
@@ -35,13 +33,28 @@ composer require erickfirmo/phpmodel
 ```
 
 ### Query
-Lorem ipsum
+Métodos que falicitam a execução de queries mysql no banco de dados:
 
 #### Select
+
+Select all columns from the table using the `select` method. Use o método `get` para executar a query:
 ```php
 <?php
 
-  $customers = (new Customer())->select()->get();
+  // Returns all collumns from `cars` table
+  $car = (new Car())->select()
+                    ->get();
+  
+```
+
+Select specific columns from the table passing an array as parameter in `select` method. Use o método `get` para executar a query:
+```php
+<?php
+
+  // Returns all collumns from model table
+  $cars = (new Car())->select(['name, 'company', 'year', 'plate'])
+                     ->get();
+
 
 ```
 
@@ -50,12 +63,12 @@ Lorem ipsum
 <?php
 
   $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
+                               ->where('company', '=', $company)
+                               ->where('year', '=', $year)
                                ->get();
 
 ```
 
-#### Get
 ```php
 <?php
 
