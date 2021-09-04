@@ -170,10 +170,10 @@ abstract class Model {
     }
 
     // busca registros
-    public function select() : Object
+    public function select(string $select='*') : Object
     {
         $this->clearQuery();
-        $sql = "SELECT * FROM ".$this->table;
+        $sql = "SELECT $select FROM ".$this->table;
         $this->addQuery($sql);
         $this->setStatement();
 
