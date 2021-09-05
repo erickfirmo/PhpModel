@@ -153,7 +153,11 @@ Adding multiple where clause to query builder:
 <?php
 
   $cars = (new Car())->select()
-                     ->orderByDesc()
+                     ->orderBy('asc')
+                     ->get();
+                     
+  $cars = (new Car())->select()
+                     ->orderBy('desc')
                      ->get();
 
 ```
