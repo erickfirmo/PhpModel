@@ -11,12 +11,37 @@ To install with composer:
 composer require erickfirmo/phpmodel
 ```
 
+### Namespace
+
+```php
+<?php
+
+ use ErickFirmo/Model as Model;
+
+```
+
 ## Usage example
 ```php
 <?php
 
   // Requires composer autoloader
   require __DIR__ . '/vendor/autoload.php';
+  
+  use ErickFirmo\Model;
+  
+  //
+  class Car extends Model {
+      
+      public $table = 'cars';
+      
+      public $fillables = [
+          'name',
+          'company',
+          'year',
+          'plate',
+          'color'
+      ];
+  }
 
   // Insert register example, returns boolean
   $saved = (new Customer())->insert([
@@ -32,6 +57,7 @@ composer require erickfirmo/phpmodel
 
 ```
 
+
 ### Query
 Methods that facilitate the execution of mysql queries in the database:
 
@@ -42,7 +68,7 @@ Select all columns from the table using the `select` method. Use the `get` metho
 <?php
 
   // Returns all columns from `cars` table
-  $car = (new Car())->select()
+  $cars = (new Car())->select()
                     ->get();
 
 ```
@@ -155,12 +181,6 @@ Adding multiple where clause to query builder:
 
 ```
 
-### Namespace
-
-```php
-<?php
-
-```
 
 <!-- Relationships -->
 
