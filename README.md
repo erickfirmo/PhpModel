@@ -44,16 +44,16 @@ composer require erickfirmo/phpmodel
   }
 
   // Insert register example, returns boolean
-  $saved = (new Customer())->insert([
+  $saved = (new Car())->insert([
       'name' => $name,
       'email' => $email,
       'phone' => $phone,
   ]);
   
   // Select register example, returns colletion
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $cars = (new Car())->select()
+                     ->where('year', '=', $year)
+                     ->get();
 
 ```
 
@@ -110,9 +110,12 @@ Adding multiple where clause to query builder:
 ```php
 <?php
 
-  $cars = (new Car())->select()
-                     ->where('email', '=', $email)
-                     ->get();
+  // cadastra pessoa no banco de dados
+  $car = (new Car())->insert([
+      'name' => $name,
+      'email' => $email,
+      'phone' => $phone,
+  ]);
 
 ```
 
@@ -120,9 +123,11 @@ Adding multiple where clause to query builder:
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $status = (new Car())->update($id, [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+        ]);
 
 ```
 
@@ -130,9 +135,7 @@ Adding multiple where clause to query builder:
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $status = (new Car())->delete($id);
 
 ```
 
@@ -140,9 +143,8 @@ Adding multiple where clause to query builder:
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $car = (new Car())->findById($id);
+
 
 ```
 
@@ -150,9 +152,9 @@ Adding multiple where clause to query builder:
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $cars = (new Car())->select()
+                     ->orderByDesc()
+                     ->get();
 
 ```
 
@@ -160,15 +162,17 @@ Adding multiple where clause to query builder:
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $cars = (new Car())->select()
+                     ->limit(50)
+                     ->get();
 
 ```
 ### Pagination
 ```php
 <?php
 
+  $cars = (new Car())->select()
+                    ->paginate(15);
 
 
 ```
