@@ -11,12 +11,37 @@ To install with composer:
 composer require erickfirmo/phpmodel
 ```
 
+### Namespace
+
+```php
+<?php
+
+ use ErickFirmo/Model as Model;
+
+```
+
 ## Usage example
 ```php
 <?php
 
   // Requires composer autoloader
   require __DIR__ . '/vendor/autoload.php';
+  
+  use ErickFirmo\Model;
+  
+  //
+  class Car extends Model {
+      
+      public $table = 'cars';
+      
+      public $fillables = [
+          'name',
+          'company',
+          'year',
+          'plate',
+          'color'
+      ];
+  }
 
   // Insert register example, returns boolean
   $saved = (new Customer())->insert([
@@ -32,22 +57,23 @@ composer require erickfirmo/phpmodel
 
 ```
 
+
 ### Query
-Métodos que falicitam a execução de queries mysql no banco de dados:
+Methods that facilitate the execution of mysql queries in the database:
 
 #### Select
 
-Select all columns from the table using the `select` method. Use o método `get` para executar a query:
+Select all columns from the table using the `select` method. Use the `get` method to perform a query:
 ```php
 <?php
 
   // Returns all columns from `cars` table
-  $car = (new Car())->select()
+  $cars = (new Car())->select()
                     ->get();
-  
+
 ```
 
-Select specific columns from the table passing an array as parameter in `select` method. Use o método `get` para executar a query:
+Select specific columns from the table passing an array as parameter in `select` method. Use the `get` method to perform a query:
 ```php
 <?php
 
@@ -55,26 +81,28 @@ Select specific columns from the table passing an array as parameter in `select`
   $cars = (new Car())->select(['name', 'company', 'year', 'plate'])
                      ->get();
 
-
 ```
 
 #### Where
+
+Adding where clause to query builder:
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('company', '=', $company)
-                               ->where('year', '=', $year)
-                               ->get();
+  $cars = (new Car())->select()
+                     ->where('company', '=', $company)
+                     ->get();
 
 ```
 
+Adding multiple where clause to query builder:
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $cars = (new Car())->select()
+                     ->where('company', '=', $company)
+                     ->where('year', '=', $year)
+                     ->get();
 
 ```
 
@@ -82,9 +110,9 @@ Select specific columns from the table passing an array as parameter in `select`
 ```php
 <?php
 
-  $customers = (new Customer())->select()
-                               ->where('email', '=', $email)
-                               ->get();
+  $cars = (new Car())->select()
+                     ->where('email', '=', $email)
+                     ->get();
 
 ```
 
@@ -153,12 +181,6 @@ Select specific columns from the table passing an array as parameter in `select`
 
 ```
 
-### Namespace
-
-```php
-<?php
-
-```
 
 <!-- Relationships -->
 
