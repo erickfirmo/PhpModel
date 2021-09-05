@@ -170,10 +170,12 @@ abstract class Model {
     }
 
     // busca registros
-    public function select(string $select='*') : Object
+    public function select(array $columns=null) : Object
     {
+        $columns = !$columns ? '*' : implode(', ', $columns);
+
         $this->clearQuery();
-        $sql = "SELECT $select FROM ".$this->table;
+        $sql = "SELECT $columns FROM ".$this->table;
         $this->addQuery($sql);
         $this->setStatement();
 
