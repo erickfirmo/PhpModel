@@ -16,7 +16,7 @@ composer require erickfirmo/phpmodel
 ```php
 <?php
 
- use ErickFirmo/Model as Model;
+ use ErickFirmo/Model;
 
 ```
 
