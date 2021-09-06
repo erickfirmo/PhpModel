@@ -29,7 +29,7 @@ composer require erickfirmo/phpmodel
   
   use ErickFirmo\Model;
   
-  //
+  // Creating a class for the entity
   class Car extends Model {
       
       public $table = 'cars';
@@ -107,19 +107,22 @@ Adding multiple where clause to query builder:
 ```
 
 #### Insert
+insert record into database table:
+
 ```php
 <?php
 
-  // cadastra pessoa no banco de dados
   $car = (new Car())->insert([
       'name' => $name,
-      'email' => $email,
-      'phone' => $phone,
+      'company' => $company,
+      'plate' => $plate,
+      'year' => $year,
   ]);
 
 ```
 
 #### Update
+// update register into database table
 ```php
 <?php
 
@@ -156,6 +159,11 @@ Adding multiple where clause to query builder:
                      ->orderBy('asc')
                      ->get();
                      
+```
+
+```php
+<?php
+                   
   $cars = (new Car())->select()
                      ->orderBy('desc')
                      ->get();
@@ -177,6 +185,13 @@ Adding multiple where clause to query builder:
 
   $cars = (new Car())->select()
                     ->paginate(15);
+
+
+```
+
+```html
+
+<span>Pagination</span>
 
 
 ```
