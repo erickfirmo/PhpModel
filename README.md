@@ -219,7 +219,7 @@ insert record into database table:
   "company": "VW",
   "year": "1934",
   "plate": "ERX-8761",
-  "uf": "SP"
+  "uf": "SP",
   "color": "black",
   "price": "89000",
 }
