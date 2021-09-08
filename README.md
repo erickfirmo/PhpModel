@@ -46,11 +46,13 @@ composer require erickfirmo/phpmodel
   // Insert register example, returns boolean
   $saved = (new Car())->insert([
       'name' => $name,
-      'email' => $email,
-      'phone' => $phone,
+      'company' => $company,
+      'year' => $year,
+      'plate' => $plate,
+      'color' => $color,
   ]);
   
-  // Select register example, returns colletion
+  // Select register example, returns collection
   $cars = (new Car())->select()
                      ->where('year', '=', $year)
                      ->get();
@@ -77,8 +79,8 @@ Select specific columns from the table passing an array as parameter in `select`
 ```php
 <?php
 
-  // Returns all columns from model table
-  $cars = (new Car())->select(['name', 'company', 'year', 'plate'])
+  // Returns specific columns from model table
+  $cars = (new Car())->select(['name', 'company', 'year'])
                      ->get();
 
 ```
@@ -112,11 +114,12 @@ insert record into database table:
 ```php
 <?php
 
-  $car = (new Car())->insert([
+  $saved = (new Car())->insert([
       'name' => $name,
       'company' => $company,
       'plate' => $plate,
       'year' => $year,
+      'color' => $color,
   ]);
 
 ```
@@ -126,10 +129,9 @@ insert record into database table:
 ```php
 <?php
 
-  $status = (new Car())->update($id, [
-            'name' => $name,
-            'email' => $email,
-            'phone' => $phone,
+  $saved = (new Car())->update($id, [
+            'plate' => $plate,
+            'color' => $color,
         ]);
 
 ```
@@ -138,7 +140,7 @@ insert record into database table:
 ```php
 <?php
 
-  $status = (new Car())->delete($id);
+  $saved = (new Car())->delete($id);
 
 ```
 
@@ -192,6 +194,35 @@ insert record into database table:
 ```html
 
 <span>Pagination</span>
+
+
+```
+
+```json
+
+{
+  "table": "cars",
+  "fillable": [
+    "id",
+    "name",
+    "company",
+    "year",
+    "plate",
+    "uf",
+    "color",
+    "price",
+  ],
+  "links": null,
+  "hasWhere": null,
+  "id": "1816",
+  "name": "Fusca",
+  "company": "VW",
+  "year": "1934",
+  "plate": "ERX-8761",
+  "uf": "SP"
+  "color": "black",
+  "price": "89000",
+}
 
 
 ```
