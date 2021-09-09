@@ -191,12 +191,23 @@ insert record into database table:
 
 ```
 
+Use the paginationLinks helper.
+
 ```html
 
 <span>Pagination</span>
 
 
 ```
+
+### Collection
+```php
+<?php
+
+
+
+```
+
 
 ```json
 
@@ -227,13 +238,6 @@ insert record into database table:
 
 ```
 
-### Collection
-```php
-<?php
-
-
-
-```
 
 
 <!-- Relationships -->
