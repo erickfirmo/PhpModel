@@ -32,9 +32,9 @@ composer require erickfirmo/phpmodel
   // Creating a class for the entity
   class Car extends Model {
       
-      public $table = 'cars';
+      protected $table = 'cars';
       
-      public $fillables = [
+      protected $fillables = [
           'name',
           'company',
           'year',
