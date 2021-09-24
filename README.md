@@ -58,6 +58,61 @@ composer require erickfirmo/phpmodel
                      ->get();
 
 ```
+### Collection Example
+
+```json
+
+
+{
+  "model": "App\\Models\\Customer",
+  "table": "customers",
+  "attributes": [
+    "id",
+    "name",
+    "company",
+    "year",
+    "plate",
+    "uf",
+    "color",
+    "price"
+  ],
+  "items": [
+    {
+      "id": "12",
+      "name": "Fusca",
+      "company": "VW",
+      "year": "1934",
+      "plate": "ERX-8761",
+      "uf": "SP",
+      "color": "yellow",
+      "price": "89000"
+    },
+    {
+      "id": "13",
+      "name": "Uno",
+      "company": "Fiat",
+      "year": "1934",
+      "plate": "ERX-8761",
+      "uf": "SP",
+      "color": "red",
+      "price": "89000"
+    },
+    {
+      "id": "14",
+      "name": "Chevette",
+      "company": "Chevrolet",
+      "year": "1934",
+      "plate": "ERX-8761",
+      "uf": "SP",
+      "color": "black",
+      "price": "89000"
+    },
+  ],
+  "links": null
+}
+
+
+```
 
 
 ### Query
@@ -65,7 +120,7 @@ Methods that facilitate the execution of mysql queries in the database:
 
 #### Select
 
-Select all columns from the table using the `select` method. Use the `get` method to perform a query:
+Select all columns from the table using the `select` method. Use the `get` method to perform a query and return a collection:
 ```php
 <?php
 
@@ -181,7 +236,7 @@ insert record into database table:
                      ->get();
 
 ```
-### Pagination
+#### Pagination
 ```php
 <?php
 
@@ -200,68 +255,7 @@ Use the paginationLinks helper.
 
 ```
 
-### Collection
-```php
-<?php
 
-
-
-```
-
-
-```json
-
-
-{
-  "model": "App\\Models\\Customer",
-  "table": "customers",
-  "attributes": [
-    "id",
-    "name",
-    "company",
-    "year",
-    "plate",
-    "uf",
-    "color",
-    "price"
-  ],
-  "items": [
-    {
-      "id": "12",
-      "name": "Fusca",
-      "company": "VW",
-      "year": "1934",
-      "plate": "ERX-8761",
-      "uf": "SP",
-      "color": "yellow",
-      "price": "89000"
-    },
-    {
-      "id": "13",
-      "name": "Uno",
-      "company": "Fiat",
-      "year": "1934",
-      "plate": "ERX-8761",
-      "uf": "SP",
-      "color": "red",
-      "price": "89000"
-    },
-    {
-      "id": "14",
-      "name": "Chevette",
-      "company": "Chevrolet",
-      "year": "1934",
-      "plate": "ERX-8761",
-      "uf": "SP",
-      "color": "black",
-      "price": "89000"
-    },
-  ],
-  "links": null
-}
-
-
-```
 
 
 
