@@ -56,17 +56,18 @@ abstract class Model {
     // seta objeto com os registros da consulta
     public function setCollection(array $registers, $singleRegister=false, array $items = [], $item = null) : void
     {
+        $modelName = get_called_class();
 
         if($singleRegister) {
-            array_push($items, $this->createObject($registers));
+            array_push($items, $this->createObject($registers, $modelName));
         } else {
             foreach($registers as $key => $register) {
-                array_push($items, $this->createObject($register));
+                array_push($items, $this->createObject($register, $modelName));
             }
         }
 
         $collection = new \stdClass;
-        $collection->model = get_called_class();
+        $collection->model = $modelName;
         $collection->table = $this->table;
         $collection->attributes = $this->fillable;
         $collection->items = $items;
@@ -76,9 +77,9 @@ abstract class Model {
     }
 
     // cria objeto model baseado no fillable
-    public function createObject($register)
+    public function createObject($register, $modelName)
     {
-        $modelItem = new \stdClass;
+        $modelItem = new $modelName;
 
         foreach ($this->fillable as $f) {
             $modelItem->$f = $register[$f];
