@@ -58,7 +58,7 @@ composer require erickfirmo/phpmodel
                      ->get();
 
 ```
-### Collection Example
+## Collections
 
 ```json
 
@@ -115,7 +115,7 @@ composer require erickfirmo/phpmodel
 ```
 
 
-### Query
+## Query
 Methods that facilitate the execution of mysql queries in the database:
 
 #### Select
