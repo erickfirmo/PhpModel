@@ -211,9 +211,11 @@ Use the paginationLinks helper.
 
 ```json
 
+
 {
-  "table": "cars",
-  "fillable": [
+  "model": "App\\Models\\Customer",
+  "table": "customers",
+  "attributes": [
     "id",
     "name",
     "company",
@@ -221,18 +223,41 @@ Use the paginationLinks helper.
     "plate",
     "uf",
     "color",
-    "price",
+    "price"
   ],
-  "links": null,
-  "hasWhere": null,
-  "id": "1816",
-  "name": "Fusca",
-  "company": "VW",
-  "year": "1934",
-  "plate": "ERX-8761",
-  "uf": "SP",
-  "color": "black",
-  "price": "89000",
+  "items": [
+    {
+      "id": "12",
+      "name": "Fusca",
+      "company": "VW",
+      "year": "1934",
+      "plate": "ERX-8761",
+      "uf": "SP",
+      "color": "yellow",
+      "price": "89000"
+    },
+    {
+      "id": "13",
+      "name": "Uno",
+      "company": "Fiat",
+      "year": "1934",
+      "plate": "ERX-8761",
+      "uf": "SP",
+      "color": "red",
+      "price": "89000"
+    },
+    {
+      "id": "14",
+      "name": "Chevette",
+      "company": "Chevrolet",
+      "year": "1934",
+      "plate": "ERX-8761",
+      "uf": "SP",
+      "color": "black",
+      "price": "89000"
+    },
+  ],
+  "links": null
 }
 
 
