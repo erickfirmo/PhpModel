@@ -34,7 +34,7 @@ composer require erickfirmo/phpmodel
       
       protected $table = 'cars';
       
-      protected $fillables = [
+      protected $fillable = [
           'name',
           'company',
           'year',
