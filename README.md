@@ -226,7 +226,7 @@ You can configure the ordering as ascending or descending using the words `asc` 
                      ->get();
                      
 ```
-##### Ordering as descending:
+##### Ordering as descending
 
 ```php
 <?php
