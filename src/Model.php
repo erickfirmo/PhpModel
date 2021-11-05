@@ -14,9 +14,9 @@ abstract class Model {
 
     protected $perPage;
 
-    public $pages;
+    protected $pages = [];
 
-    public $hasWhere;
+    protected $hasWhere;
 
     // realiza conexão com o banco de dados
     public function connect() : Object
@@ -36,7 +36,7 @@ abstract class Model {
         $rest = $count % $this->perPage;
         $pages = $count / $this->perPage;
         $pages = $rest > 0 ? ($pages + 1) : $pages;
-        $this->pages = array_keys(array_fill(1, $pages, null));
+        $this->pages = array_keys(array_fill(1, $pages, []));
     }
 
     // limpa query do objeto
@@ -162,7 +162,7 @@ abstract class Model {
 
         return $this;
     }
-    
+
     // retorna query
     public function getSql()
     {
