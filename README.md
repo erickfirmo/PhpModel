@@ -261,7 +261,7 @@ In this example, we have 100 records, and we'll display 25 per page:
 
 
 ```
-By default, the `pages` attribute of the collection will be an array with the number of pages:
+By default, the `pages` attribute of the <a href="https://github.com/erickfirmo/PhpModel/blob/master/README.md#collections">collection</a> will be an array with the number of pages:
 
 ```json
 
