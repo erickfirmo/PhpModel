@@ -164,7 +164,7 @@ Adding multiple where clause to query builder:
 ```
 
 #### Insert
-insert record into database table:
+Inserting record into database table:
 
 ```php
 <?php
@@ -180,7 +180,7 @@ insert record into database table:
 ```
 
 #### Update
-// update register into database table
+Updating register into database table:
 ```php
 <?php
 
@@ -192,6 +192,7 @@ insert record into database table:
 ```
 
 #### Delete
+Deleting register into database table:
 ```php
 <?php
 
@@ -200,6 +201,8 @@ insert record into database table:
 ```
 
 #### FindById
+Searching register by id:
+
 ```php
 <?php
 
@@ -209,6 +212,10 @@ insert record into database table:
 ```
 
 #### OrderBy
+You can configure the ordering as ascending or descending using the words `asc` or `desc` as parameter in `OrderBy` method:
+
+
+##### Ordering as ascending
 ```php
 <?php
 
@@ -217,6 +224,7 @@ insert record into database table:
                      ->get();
                      
 ```
+##### Ordering as descending:
 
 ```php
 <?php
