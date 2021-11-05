@@ -247,16 +247,34 @@ You can configure the ordering as ascending or descending using the words `asc` 
 
 ```
 #### Pagination
+
+We can paginate records using the `paginate` method. We must pass the desired number of records per page as a parameter. This method has a value of 10 by default.
+
+In this example, we have 100 records, and we'll display 25 per page:
+
 ```php
 <?php
 
   $cars = (new Car())->select()
-                    ->paginate(15);
+                    ->paginate(25);
+
+
+```
+By default, the `pages` attribute of the collection will be an array with the number of pages:
+
+```json
+
+  "pages": [
+      1,
+      2,
+      3
+  ],
+}
 
 
 ```
 
-By default, the `pages` attribute of the collection will be an array with the number of pages. We can use this array to create our paging component. Simple example of page component in with php and bootstrap:
+We can use this array to create our paging component. Simple example of page component in with php and bootstrap:
 
 ```php
 
