@@ -108,7 +108,9 @@ composer require erickfirmo/phpmodel
       "price": "89000"
     },
   ],
-  "links": null
+  "pages": [
+  
+  ],
 }
 
 
@@ -164,7 +166,7 @@ Adding multiple where clause to query builder:
 ```
 
 #### Insert
-insert record into database table:
+Inserting record into database table:
 
 ```php
 <?php
@@ -180,7 +182,7 @@ insert record into database table:
 ```
 
 #### Update
-// update register into database table
+Updating register into database table:
 ```php
 <?php
 
@@ -192,6 +194,7 @@ insert record into database table:
 ```
 
 #### Delete
+Deleting register into database table:
 ```php
 <?php
 
@@ -200,6 +203,8 @@ insert record into database table:
 ```
 
 #### FindById
+Searching register by id:
+
 ```php
 <?php
 
@@ -209,6 +214,10 @@ insert record into database table:
 ```
 
 #### OrderBy
+You can configure the ordering as ascending or descending using the words `asc` or `desc` as parameter in `orderBy` method.
+
+
+Ordering as ascending:
 ```php
 <?php
 
@@ -217,6 +226,7 @@ insert record into database table:
                      ->get();
                      
 ```
+Ordering as descending:
 
 ```php
 <?php
@@ -228,6 +238,7 @@ insert record into database table:
 ```
 
 #### Limit
+Limiting number of records in the query:
 ```php
 <?php
 
@@ -237,20 +248,47 @@ insert record into database table:
 
 ```
 #### Pagination
+
+We can paginate records using the `paginate` method. We must pass the desired number of records per page as a parameter. This method has a value of 10 by default.
+
+In this example, we have 100 records, and we'll display 25 per page:
+
 ```php
 <?php
 
   $cars = (new Car())->select()
-                    ->paginate(15);
+                    ->paginate(25);
 
 
 ```
+By default, the `pages` attribute of the collection will be an array with the number of pages:
 
-Use the paginationLinks helper.
+```json
 
-```html
+  "pages": [
+      1,
+      2,
+      3,
+      4
+  ],
 
-<span>Pagination</span>
+```
+
+We can use this array to create our paging component. Simple example of page component in with php and bootstrap:
+
+```php
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <?php foreach ($cars->pages as $key => $page) { ?>
+            <li class="page-item <?php echo (!isset($_GET['page']) && $page == 1) || $_GET['page'] == $page ? 'active' : ''; ?>">
+              <a class="page-link" href="<?php echo 'pessoas?page='.$page; ?>">
+                 <?php echo $page; ?>
+              </a>
+            </li>
+        <?php } ?>
+    </ul>
+</nav>
 
 
 ```
