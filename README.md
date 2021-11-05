@@ -214,10 +214,10 @@ Searching register by id:
 ```
 
 #### OrderBy
-You can configure the ordering as ascending or descending using the words `asc` or `desc` as parameter in `orderBy` method:
+You can configure the ordering as ascending or descending using the words `asc` or `desc` as parameter in `orderBy` method.
 
 
-##### Ordering as ascending
+Ordering as ascending:
 ```php
 <?php
 
@@ -226,7 +226,7 @@ You can configure the ordering as ascending or descending using the words `asc` 
                      ->get();
                      
 ```
-##### Ordering as descending
+Ordering as descending:
 
 ```php
 <?php
