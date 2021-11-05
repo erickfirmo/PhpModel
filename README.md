@@ -268,7 +268,8 @@ By default, the `pages` attribute of the collection will be an array with the nu
   "pages": [
       1,
       2,
-      3
+      3,
+      4
   ],
 
 ```
