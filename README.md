@@ -238,6 +238,7 @@ You can configure the ordering as ascending or descending using the words `asc` 
 ```
 
 #### Limit
+Limiting number of records in the query:
 ```php
 <?php
 
@@ -269,8 +270,6 @@ By default, the `pages` attribute of the collection will be an array with the nu
       2,
       3
   ],
-}
-
 
 ```
 
