@@ -108,7 +108,9 @@ composer require erickfirmo/phpmodel
       "price": "89000"
     },
   ],
-  "links": null
+  "pages": [
+  
+  ],
 }
 
 
@@ -258,7 +260,17 @@ Use the paginationLinks helper.
 
 ```html
 
-<span>Pagination</span>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <?php
+        // percorre página e cria link de páginação
+        for ($i=$start; $i <= $end; $i++) { ?>
+            <li class="page-item <?php activePage('pessoas', 'active', ['page' => $i]); ?>"><a class="page-link" href="<?php url('pessoas?page='.$i); ?>">
+                 <?php echo $i; ?>
+            </a></li>
+        <?php } ?>
+    </ul>
+</nav>
 
 
 ```
