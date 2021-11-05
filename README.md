@@ -214,7 +214,7 @@ Searching register by id:
 ```
 
 #### OrderBy
-You can configure the ordering as ascending or descending using the words `asc` or `desc` as parameter in `OrderBy` method:
+You can configure the ordering as ascending or descending using the words `asc` or `desc` as parameter in `orderBy` method:
 
 
 ##### Ordering as ascending
@@ -258,15 +258,13 @@ You can configure the ordering as ascending or descending using the words `asc` 
 
 Use the paginationLinks helper.
 
-```html
+```php
 
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-        <?php
-        // percorre página e cria link de páginação
-        for ($i=$start; $i <= $end; $i++) { ?>
-            <li class="page-item <?php activePage('pessoas', 'active', ['page' => $i]); ?>"><a class="page-link" href="<?php url('pessoas?page='.$i); ?>">
-                 <?php echo $i; ?>
+        <?php foreach ($cars->pages as $page) { ?>
+            <li class="page-item"><a class="page-link" href="<?php echo 'pessoas?page='.$page; ?>">
+                 <?php echo $page; ?>
             </a></li>
         <?php } ?>
     </ul>
