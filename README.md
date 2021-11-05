@@ -256,16 +256,18 @@ You can configure the ordering as ascending or descending using the words `asc` 
 
 ```
 
-Use the paginationLinks helper.
+By default, the `pages` attribute of the collection will be an array with the number of pages. We can use this array to create our paging component. Simple example of page component in with php and bootstrap:
 
 ```php
 
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-        <?php foreach ($cars->pages as $page) { ?>
-            <li class="page-item"><a class="page-link" href="<?php echo 'pessoas?page='.$page; ?>">
+        <?php foreach ($cars->pages as $key => $page) { ?>
+            <li class="page-item <?php echo (!isset($_GET['page']) && $page == 1) || $_GET['page'] == $page ? 'active' : ''; ?>">
+              <a class="page-link" href="<?php echo 'pessoas?page='.$page; ?>">
                  <?php echo $page; ?>
-            </a></li>
+              </a>
+            </li>
         <?php } ?>
     </ul>
 </nav>
