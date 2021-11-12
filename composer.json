@@ -1,7 +1,7 @@
 {
     "name": "erickfirmo/phpmodel",
     "description": "MySQL query builder class in PHP.",
-    "keywords": ["database", "pdo", "mysql", "php", "model", "oop", "sql", "php-class", "mysql-database", "php7", "db", "crud"],
+    "keywords": ["database", "pdo", "mysql", "php", "model", "oop", "sql", "php-class", "mysql-database", "php7", "db", "crud", "mvc", "query-builder", "php8" ],
     "type": "library",
     "authors": [
         {
