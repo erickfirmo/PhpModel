@@ -54,15 +54,19 @@ abstract class Model {
     }
 
     // seta objeto com os registros da consulta
-    public function setCollection(array $registers, $singleRegister=false, array $items = [], $item = null) : void
+    public function setCollection($registers, $singleRegister=false, array $items = [], $item = null) : void
     {
         $modelName = get_called_class();
 
-        if($singleRegister) {
-            array_push($items, $this->createObject($registers, $modelName));
-        } else {
-            foreach($registers as $key => $register) {
-                array_push($items, $this->createObject($register, $modelName));
+        /// verifica se há registros antes de criar o objeto
+        if($registers)
+        {
+            if($singleRegister) {
+                array_push($items, $this->createObject($registers, $modelName));
+            } else {
+                foreach($registers as $key => $register) {
+                    array_push($items, $this->createObject($register, $modelName));
+                }
             }
         }
 
