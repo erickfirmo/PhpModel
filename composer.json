@@ -4,19 +4,18 @@
     "keywords": ["database", "pdo", "mysql", "php", "model", "oop", "sql", "php-class", "mysql-database", "php7", "db", "crud", "mvc", "query-builder", "php8" ],
     "type": "library",
     "authors": [
-        {
-        "name": "Érick Firmo",
+      {
+        "name": "Erick Firmo",
         "email": "erickfirmo1996@gmail.com"
-        }
+      }
     ],
     "autoload": {
-          "psr-4": {
-              "ErickFirmo\\": "src/"
-           }
-      },
-      "require": {
-        "php": ">=7",
-        "erickfirmo/dbconnection": "1.1.2"
+      "psr-4": {
+        "ErickFirmo\\": "src/"
+      }
+    },
+    "require": {
+      "php": ">=7.4"
     },
     "require-dev": {
       "phpunit/phpunit": "^5.0"

@@ -21,7 +21,7 @@ abstract class Model {
     // realiza conexão com o banco de dados
     public function connect() : Object
     {
-        return $this->db = (new \Connection())->getPDOConnection();
+        return $this->db = $this->getPDOConnection();
     }
 
     // seta statement
@@ -270,4 +270,18 @@ abstract class Model {
         return $this;
     }
 
+    // conexão com o banco de dados via pdo
+    public function getPDOConnection()
+    {
+        $dsn = 'mysql:host='. DB_HOST .';dbname='. DB_NAME;
+
+        try {
+            $pdo = new \PDO($dsn, DB_USER, DB_PASSWORD);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            return $pdo;
+
+        } catch(PDOException $ex) {
+            print 'Error: '.$ex->getMessage();
+        }
+    }
 }
