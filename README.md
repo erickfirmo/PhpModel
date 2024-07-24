@@ -64,8 +64,8 @@ composer require erickfirmo/phpmodel
 
 
 {
-  "model": "App\\Models\\Customer",
-  "table": "customers",
+  "model": "App\\Models\\Car",
+  "table": "cars",
   "attributes": [
     "id",
     "name",
