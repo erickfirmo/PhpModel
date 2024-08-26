@@ -195,10 +195,15 @@ abstract class Model {
         $values = array_values($values);
         $columns = implode(", ", $columns);
 
-        $values = implode(', ', array_map(
-            function ($v) { return sprintf("'%s'", addslashes($v)); },
-            $values
-        ));
+        $arr_values = [];
+
+        foreach ($values as $key => $value) {
+            if(gettype($value) == 'string') {
+                $arr_values[] = sprintf("'%s'", addslashes($value));
+            }
+        }
+        
+        $values = implode(', ', $arr_values);
 
         $sql = "INSERT INTO ".$this->table." (".$columns.") VALUES (".$values.")";
         $this->addQuery($sql);
