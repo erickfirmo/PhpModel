@@ -1,11 +1,11 @@
 # PhpModel
- MySQL Query Builder in PHP. Developed by Érick Firmo (BR) http://erickfirmo.dev
+ MySQL Query Builder in PHP - by Erick Firmo - https://erickfirmo.dev
  
 ## Requirements
-- PHP >= 5.4
+- PHP >= 7.4
 
 ## Install
-To install with composer:
+Install with composer:
 
 ```sh
 composer require erickfirmo/phpmodel
